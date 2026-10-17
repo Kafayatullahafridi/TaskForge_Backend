@@ -5,12 +5,13 @@ from app.core.logging import setup_logging
 from app.db.session import get_db
 from sqlalchemy.orm import Session
 from fastapi import Depends
-
+from app.api.routes import auth
 setup_logging()
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+app.include_router(auth.router)
 
 logger.info("TaskForge started")
 @app.get("/test-db")
