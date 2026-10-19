@@ -6,13 +6,17 @@ from app.db.session import get_db
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from app.api.routes import auth
+from app.api.routes import admin
+from app.api.routes import users
+
 setup_logging()
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
 app.include_router(auth.router)
-
+app.include_router(users.router)
+app.include_router(admin.router)
 logger.info("TaskForge started")
 @app.get("/test-db")
 def test_db(db: Session = Depends(get_db)):
@@ -26,3 +30,5 @@ def test_error():
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
